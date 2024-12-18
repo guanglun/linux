@@ -290,7 +290,6 @@ static const struct regmap_config sun50i_r329_pwm_regmap_config = {
 static const struct pwm_ops sun50i_r329_pwm_ops = {
 	.apply = sun50i_r329_pwm_apply,
 	.get_state = sun50i_r329_pwm_get_state,
-	.owner = THIS_MODULE,
 };
 
 static const struct of_device_id sun50i_r329_pwm_dt_ids[] = {
@@ -360,7 +359,6 @@ static int sun50i_r329_pwm_probe(struct platform_device *pdev)
 
 	pwm->chip.dev = &pdev->dev;
 	pwm->chip.ops = &sun50i_r329_pwm_ops;
-	pwm->chip.base = -1;
 	pwm->chip.of_xlate = of_pwm_xlate_with_flags;
 	pwm->chip.of_pwm_n_cells = 3;
 
