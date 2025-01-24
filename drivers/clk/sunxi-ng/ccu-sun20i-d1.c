@@ -1379,6 +1379,11 @@ static int sun20i_d1_ccu_probe(struct platform_device *pdev)
 	val &= ~GENMASK(9, 8);
 	writel(val, reg + SUN20I_D1_FANOUT_27M_REG);
 
+	/* select APB1_CLK_REG source PLL_PERI, set 100MHz*/
+	val = readl(reg + 0x524);
+	val |= BIT(25) | BIT(24) | BIT(8) | BIT(1);
+	writel(val, reg + 0x524);
+
 	ret = devm_sunxi_ccu_probe(&pdev->dev, reg, &sun20i_d1_ccu_desc);
 	if (ret)
 		return ret;
