@@ -4752,13 +4752,11 @@ end:
  *	interface. This should reject the call when AP mode wasn't started.
  */
 static int rwnx_cfg80211_change_beacon(struct wiphy *wiphy, struct net_device *dev,
-									   struct cfg80211_ap_update *info)
+									struct cfg80211_ap_update *info)
 {
 	struct rwnx_hw *rwnx_hw = wiphy_priv(wiphy);
 	struct rwnx_vif *vif = netdev_priv(dev);
 	struct rwnx_bcn *bcn = &vif->ap.bcn;
-	struct cfg80211_beacon_data *beacon = &info->beacon;
-	
 	struct rwnx_ipc_elem_var elem;
 	u8 *buf;
 	int error = 0;
@@ -4767,7 +4765,7 @@ static int rwnx_cfg80211_change_beacon(struct wiphy *wiphy, struct net_device *d
 	RWNX_DBG(RWNX_FN_ENTRY_STR);
 
 	// Build the beacon
-	buf = rwnx_build_bcn(bcn, beacon);
+	buf = rwnx_build_bcn(bcn, &info->beacon);
 	if (!buf)
 		return -ENOMEM;
 
